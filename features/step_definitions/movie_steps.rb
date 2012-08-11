@@ -33,10 +33,8 @@ Then /I should (not )?see movies rated: (.*)/ do |neg, rating_list|
       page.find(:xpath, "//table[@id=\"movies\"]/tbody[count(tr[td = \"#{rating}\"]) = 0]")
     end
   else
-    Movie.all_ratings.each do |rating|
-      next if ratings.include?(rating)
-      page.find(:xpath, "//table[@id=\"movies\"]/tbody[count(tr[td = \"#{rating}\"]) = 0]")
-    end
+    db_size = filtered_movies = Movie.find(:all, :conditions => {:rating => ratings}).size
+    page.find(:xpath, "//table[@id=\"movies\"]/tbody[count(tr) = #{db_size} ]")
   end
 end
 
@@ -68,4 +66,29 @@ When /^I (un)?check all the ratings$/ do |uncheck|
       check(rating)
     end
   end
+end
+
+
+
+
+module Enumerable
+  def sorted?
+    each_cons(2).all? { |a, b| (a <=> b) <= 0 }
+  end
+end
+
+
+Then /^the movies should be sorted by (.+)$/ do |sort_field|
+        col_index = case sort_field
+        when "title" then 0
+        when "release_date" then 2
+        else raise ArgumentError
+        end
+        
+        values = all("table#movies tbody tr").collect { 
+                |row| 
+                row.all("td")[col_index].text 
+        }
+        
+        assert values.sorted?
 end

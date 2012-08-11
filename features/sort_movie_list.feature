@@ -27,7 +27,8 @@ Scenario: sort movies alphabetically
   When I check all the ratings
   When I press "ratings_submit"
   When I follow "title_header"
-  Then I should see "Amelie" before "The Terminator"
+  #Then I should see "Amelie" before "The Terminator"
+  Then the movies should be sorted by title
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"
@@ -35,4 +36,5 @@ Scenario: sort movies in increasing order of release date
   When I check all the ratings
   When I press "ratings_submit"
   When I follow "release_date_header"
-  Then I should see "The Terminator" before "Amelie"
+  #Then I should see "The Terminator" before "Amelie"
+  Then the movies should be sorted by release_date

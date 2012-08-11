@@ -23,7 +23,7 @@ end
 Then /I should see (none|all) of the movies/ do |filter|
   db_size = 0
   db_size = Movie.all.size if filter == "all"
-  page.find(:xpath, "//table[@id=\"movies\"]/tbody[count(tr) = #{db_size} ]")
+  assert all("table#movies tbody tr").count == db_size
 end
 
 Then /I should (not )?see movies rated: (.*)/ do |neg, rating_list|

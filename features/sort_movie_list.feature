@@ -35,4 +35,4 @@ Scenario: sort movies in increasing order of release date
   When I check all the ratings
   When I press "ratings_submit"
   When I follow "release_date_header"
-  Then I should see "The Terminator" before "Aladdin"
+  Then I should see "The Terminator" before "Amelie"

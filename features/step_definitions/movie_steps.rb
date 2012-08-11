@@ -20,6 +20,12 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   assert page.body.index(e1) < page.body.index(e2) , "Wrong order"
 end
 
+Then /I should see (none|all) of the movies/ do |filter|
+  db_size = 0
+  db_size = Movie.all.size if filter == "all"
+  page.find(:xpath, "//table[@id=\"movies\"]/tbody[count(tr) = #{db_size} ]")
+end
+
 Then /I should (not )?see movies rated: (.*)/ do |neg, rating_list|
   ratings = rating_list.split(",")
   if(neg)

@@ -10,9 +10,9 @@ class MoviesController < ApplicationController
     sort = params[:sort] || session[:sort]
     case sort
     when 'title'
-      ordering,@title_header = {:order => :title}, 'hilite'
+      ordering,@title_header = {:order => "title DESC"}, 'hilite'
     when 'release_date'
-      ordering,@date_header = {:order => :release_date}, 'hilite'
+      ordering,@date_header = {:order => "release_date DESC"}, 'hilite'
     end
     @all_ratings = Movie.all_ratings
     @selected_ratings = params[:ratings] || session[:ratings] || {}
